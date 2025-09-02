@@ -3,7 +3,7 @@ name: Deploy Laravel to InfinityFree
 on:
   push:
     branches:
-      - main   # jab bhi main branch pe push hoga, deploy hoga
+      - main   # jab bhi main branch pe push hoga
 
 jobs:
   deploy:
@@ -22,7 +22,7 @@ jobs:
         run: composer install --no-dev --optimize-autoloader
 
       - name: Upload to InfinityFree
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
