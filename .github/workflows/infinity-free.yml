@@ -1,30 +1,29 @@
-name: Deploy Laravel to InfinityFree
+name: Deploy to example3-app.infinityfreeapp.com
 
+# Run manually or on push to the main branch
 on:
+  workflow_dispatch:
   push:
     branches:
-      - main   # jab bhi main branch pe push hoga
+      - main
 
 jobs:
   deploy:
+    name: Deploy via FTP
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      # Step 1: Clone the latest code from GitHub
+      - name: Get latest code
+        uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      # Step 2: Upload code via FTP
+      - name: Deploy to InfinityFree via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          php-version: '8.1'
-
-      - name: Install dependencies
-        run: composer install --no-dev --optimize-autoloader
-
-      - name: Upload to InfinityFree
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /htdocs/
+          server-dir: /example3-app.infinityfreeapp.com/htdocs/  # For addon domains
+          timeout: 86400000
+          log-level: standard
